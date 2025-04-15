@@ -40,23 +40,50 @@ struct MainView: View {
                             infoItems: InfoItem.defaultItems
                         )
                         
-                        Spacer(minLength: 50)
+                        Spacer(minLength: 10)
                         
-                        // 버튼 영역 - 새로운 컴포넌트 사용
-                        ButtonsContainerView(
-                            startAction: { navigateToGame = true },
-                            rankingAction: { navigateToRanking = true }
-                        )
+                        // 버튼 영역 - NavigationLink로 변경
+                        HStack(spacing: 25) {
+                            NavigationLink(destination: GameView()) {
+                                HStack {
+                                    Image(systemName: "play.fill")
+                                    Text("START")
+                                        .fontWeight(.bold)
+                                }
+                                .padding()
+                                .frame(width: 150, height: 70)
+                                .background(Color("StartButtonColor"))
+                                .foregroundColor(.white)
+                                .cornerRadius(15)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(Color("StartButtonStroke"), lineWidth: 5)
+                                )
+                                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+                            }
+                            
+                            NavigationLink(destination: RankingView()) {
+                                HStack {
+                                    Image(systemName: "trophy.fill")
+                                    Text("RANKING")
+                                        .fontWeight(.bold)
+                                }
+                                .padding()
+                                .frame(width: 150, height: 70)
+                                .background(Color("RankingButtonColor"))
+                                .foregroundColor(.black)
+                                .cornerRadius(15)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(Color("RankingButtonStroke"), lineWidth: 5)
+                                )
+                                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+                            }
+                        }
                         .padding(.bottom, 40)
                     }
                     .frame(minHeight: UIScreen.main.bounds.height - 50)
                 }
-            }
-            .navigationDestination(isPresented: $navigateToGame) {
-                GameView()
-            }
-            .navigationDestination(isPresented: $navigateToRanking) {
-                RankingView()
             }
         }
         .navigationBarHidden(true)
@@ -65,16 +92,22 @@ struct MainView: View {
 
 // 임시 게임 뷰
 struct GameView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     var body: some View {
-        VStack(spacing: 30) {
-            Text("게임 화면")
-                .font(.largeTitle)
+        ZStack {
+            Color.black.opacity(0.05).edgesIgnoringSafeArea(.all)
             
-            Text("여기서 꿀벌을 터치하는 게임을 구현합니다")
-                .padding()
-            
-            ActionButtonView.backButton {
-                // 뒤로 가기 로직
+            VStack(spacing: 30) {
+                Text("게임 화면")
+                    .font(.largeTitle)
+                
+                Text("여기서 꿀벌을 터치하는 게임을 구현합니다")
+                    .padding()
+                
+                ActionButtonView.backButton {
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -86,15 +119,19 @@ struct RankingView: View {
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        VStack(spacing: 30) {
-            Text("랭킹 화면")
-                .font(.largeTitle)
+        ZStack {
+            Color.black.opacity(0.05).edgesIgnoringSafeArea(.all)
             
-            Text("여기서 최고 점수 목록을 확인합니다")
-                .padding()
-            
-            ActionButtonView.backButton {
-                presentationMode.wrappedValue.dismiss()
+            VStack(spacing: 30) {
+                Text("랭킹 화면")
+                    .font(.largeTitle)
+                
+                Text("여기서 최고 점수 목록을 확인합니다")
+                    .padding()
+                
+                ActionButtonView.backButton {
+                    presentationMode.wrappedValue.dismiss()
+                }
             }
         }
         .navigationBarBackButtonHidden(true)
