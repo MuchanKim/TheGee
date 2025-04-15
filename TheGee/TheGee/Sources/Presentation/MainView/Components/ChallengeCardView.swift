@@ -5,7 +5,10 @@
 //  Created by Moo on 4/14/25.
 //
 
+
 import SwiftUI
+
+// MARK: - 카드 뷰
 
 struct ChallengeCardView: View {
     var title: String
@@ -17,7 +20,7 @@ struct ChallengeCardView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 20)
                 .fill(Color("CardColor"))
-                .frame(maxWidth: 350)
+                .frame(maxWidth: 350, maxHeight: 500)
                 .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
             
             VStack(spacing: 20) {
@@ -29,12 +32,12 @@ struct ChallengeCardView: View {
                 
                 // 타이틀
                 Text(title)
-                    .font(.custom("DNFBitBitOTF", size: 20))
+                    .font(.custom("GmarketSansBold", size: 20))
                     .fontWeight(.bold)
                 
                 // 설명
                 Text(description)
-                    .font(.subheadline)
+                    .font(.custom("GmarketSansMedium", size: 14))
                     .lineSpacing(5)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
@@ -49,6 +52,8 @@ struct ChallengeCardView: View {
     }
 }
 
+
+// MARK: 소개 글
 struct InfoListView: View {
     let items: [InfoItem]
     
@@ -66,7 +71,14 @@ struct InfoListView: View {
         .padding(.top, 10)
     }
 }
+/**
+간단한 요약 설명
 
+- Parameters:
+  - parameterName: 파라미터에 대한 설명
+- Returns: 반환값에 대한 설명
+- Throws: 발생할 수 있는 에러에 대한 설명
+*/
 struct InfoRowView: View {
     let icon: String
     let text: String
@@ -84,6 +96,8 @@ struct InfoRowView: View {
         .padding(.horizontal, horizontalPadding)
     }
 }
+
+// TODO: 낄낄쓰
 
 struct InfoItem: Identifiable {
     let id = UUID()
