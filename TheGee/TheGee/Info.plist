@@ -4,6 +4,9 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>GmarketSansLight.otf</string>
+		<string>GmarketSansMedium.otf</string>
+		<string>GmarketSansBold.otf</string>
 		<string>DNFBitBitOTF.otf</string>
 	</array>
 </dict>
