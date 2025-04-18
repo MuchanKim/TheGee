@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct MainView: View {
-    @State private var navigateToGame = false
-    @State private var navigateToRanking = false
-    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -44,7 +41,7 @@ struct MainView: View {
                         
                         // 버튼 영역 - NavigationLink로 변경
                         HStack(spacing: 25) {
-                            NavigationLink(destination: GameView()) {
+                            NavigationLink(destination: SpeedGameView()) {
                                 HStack {
                                     Image(systemName: "play.fill")
                                     Text("START")
@@ -90,33 +87,9 @@ struct MainView: View {
     }
 }
 
-// 임시 게임 뷰
-struct GameView: View {
-    @Environment(\.presentationMode) var presentationMode
-    
-    var body: some View {
-        ZStack {
-            Color.black.opacity(0.05).edgesIgnoringSafeArea(.all)
-            
-            VStack(spacing: 30) {
-                Text("게임 화면")
-                    .font(.largeTitle)
-                
-                Text("여기서 꿀벌을 터치하는 게임을 구현합니다")
-                    .padding()
-                
-                ActionButtonView.backButton {
-                    presentationMode.wrappedValue.dismiss()
-                }
-            }
-        }
-        .navigationBarBackButtonHidden(true)
-    }
-}
-
-// 임시 랭킹 뷰
+// MARK: - 랭킹 뷰
 struct RankingView: View {
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.dismiss) private var dismissAction
     
     var body: some View {
         ZStack {
@@ -130,7 +103,7 @@ struct RankingView: View {
                     .padding()
                 
                 ActionButtonView.backButton {
-                    presentationMode.wrappedValue.dismiss()
+                    dismissAction()
                 }
             }
         }
