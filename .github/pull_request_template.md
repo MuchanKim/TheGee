@@ -13,7 +13,20 @@
 <!-- 관련된 이슈를 연결해주세요. -->
 
 ## 📸 스크린샷
-<!-- 이미지 크기 조절 -> <img src="<이미지주소>" width="50%" height="50%"> -->
+<!-- 이미지 크기 조절 -> <img src="이미지주소" width="50%" height="50%"> -->
+<!-- 이미지 테이블
+<table>
+  <tr>
+    <td><img src="이미지주소" width="300", height:"200 /></td>
+    <td><img src="이미지주소2" width="300", height:"200 /></td>
+  </tr>
+
+  <tr>
+    <td align="center"><b>텍스트1</b></td>
+    <td align="center"><b>텍스트2</b></td>
+  </tr>
+</table>
+-->
 <!-- UI 변경사항이 있다면 스크린샷을 첨부해주세요. -->
 
 ## 📋 리뷰 요구사항 및 추가 설명
