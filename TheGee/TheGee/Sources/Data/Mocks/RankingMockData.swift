@@ -27,9 +27,9 @@ struct RankingMockData {
     static func mockPersonalRecords() -> [PersonalRecord] {
         let today = Date()
         return [
-            PersonalRecord(reactionTime: 32, date: today),
-            PersonalRecord(reactionTime: 34, date: today),
-            PersonalRecord(reactionTime: 71, date: today)
+            PersonalRecord(id: UUID(), reactionTime: 32, date: today),
+            PersonalRecord(id: UUID(), reactionTime: 34, date: today),
+            PersonalRecord(id: UUID(), reactionTime: 71, date: today)
         ]
     }
 }
