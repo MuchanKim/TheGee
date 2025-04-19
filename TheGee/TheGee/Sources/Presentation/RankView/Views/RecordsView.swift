@@ -9,17 +9,17 @@ import SwiftUI
 
 // MARK: - 개인 기록 뷰
 /// 개인 기록 목록을 표시하는 컨테이너 뷰
-struct PersonalRecordsView: View {
+struct RecordsView: View {
     let records: [PersonalRecord]
     let onDelete: (UUID) -> Void
-    let viewModel: RankViewModel
+    let formatDate: (Date) -> String  // 뷰모델 대신 필요한 함수만 주입
     
     var body: some View {
         VStack(spacing: 8) {
             ForEach(records) { record in
-                PersonalRecordItemView(
+                RecordItemView(
                     record: record,
-                    viewModel: viewModel,
+                    formatDate: formatDate,  // 함수만 전달
                     onDelete: {
                         onDelete(record.id)
                     }
@@ -42,9 +42,9 @@ struct PersonalRecordsView: View {
 
 // MARK: - 개인 기록 아이템 뷰
 /// 개별 개인 기록 항목을 표시하는 뷰
-struct PersonalRecordItemView: View {
+struct RecordItemView: View {
     let record: PersonalRecord
-    let viewModel: RankViewModel
+    let formatDate: (Date) -> String  // 뷰모델 대신 함수만 주입
     let onDelete: () -> Void
     
     var body: some View {
@@ -58,7 +58,7 @@ struct PersonalRecordItemView: View {
             Spacer()
             
             // 날짜
-            Text(viewModel.formattedDateString(from: record.date))
+            Text(formatDate(record.date))  // 주입된 함수 사용
                 .font(.system(size: 16))
                 .foregroundColor(.black.opacity(0.7))
                 .padding(.trailing, 10)
