@@ -13,9 +13,12 @@ struct ResultView: View {
     let averageTime: Int
     let onClose: () -> Void
     let onRestart: () -> Void
+    let onSaveRecord: (() -> Void)? // 저장 콜백 (개인 기록 저장용)
     
     // 닉네임 입력을 위한 상태 변수
     @State private var nickname: String = ""
+    // 기록 저장 여부를 추적하는 변수 추가
+    @State private var isPersonalRecordSaved: Bool = false
     
     var body: some View {
         ZStack {
@@ -36,9 +39,20 @@ struct ResultView: View {
                 ResultCardView(
                     nickname: $nickname,
                     averageTime: averageTime,
-                    onRegistration: onRestart,
+                    onRegistration: {
+                        // 여기는 나중에 파이어베이스 랭킹 등록 기능 추가 예정
+                        // 등록하기 버튼을 누르면 메인 화면으로 돌아감
+                        onClose()
+                    },
                     onSkip: onClose
                 )/*.padding(.bottom, 120)*/
+            }
+        }
+        .onAppear {
+            // 화면이 나타날 때 자동으로 개인 기록만 저장
+            if !isPersonalRecordSaved {
+                onSaveRecord?()
+                isPersonalRecordSaved = true
             }
         }
     }
@@ -49,7 +63,8 @@ struct ResultView: View {
         reactionTimes: [320, 280, 350, 300, 290],
         averageTime: 53,
         onClose: {},
-        onRestart: {}
+        onRestart: {},
+        onSaveRecord: {}
     )
 }
 

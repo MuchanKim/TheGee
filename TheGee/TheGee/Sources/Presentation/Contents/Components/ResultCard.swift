@@ -98,6 +98,7 @@ struct ResultCardView: View {
         reactionTimes: [320, 280, 350, 300, 290],
         averageTime: 53,
         onClose: {},
-        onRestart: {}
+        onRestart: {},
+        onSaveRecord: {}
     )
 }
