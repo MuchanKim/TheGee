@@ -62,9 +62,9 @@ struct RankView: View {
                     RecordsView(
                         records: viewModel.sortedByRecentDate,
                         onDelete: { id in
-                            viewModel.deletePersonalRecord(withId: id)
+                            viewModel.deleteRecord(withId: id)
                         },
-                        formatDate: viewModel.formattedDateString
+                        formatDate: viewModel.formatDate
                     )
                     
                     // 하단 여백

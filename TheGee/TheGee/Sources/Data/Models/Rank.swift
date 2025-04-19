@@ -40,11 +40,25 @@ extension RankingItem {
 
 // MARK: - 개인 기록 모델
 /// 개인 기록 리스트에 표시될 각 항목의 데이터 모델
-struct PersonalRecord: Identifiable {
-    let id = UUID()
-    let reactionTime: Int // ms 단위
+struct PersonalRecord: Identifiable, Codable {
+    let id: UUID
+    let reactionTime: Int
     let date: Date
+    
+    init(id: UUID = UUID(), reactionTime: Int, date: Date) {
+        self.id = id
+        self.reactionTime = reactionTime
+        self.date = date
+    }
+    
+    // 이전 초기화자 추가
+    init(reactionTime: Int, date: Date) {
+        self.id = UUID()
+        self.reactionTime = reactionTime
+        self.date = date
+    }
 }
+
 // MARK: - UI 관련 확장
 extension PersonalRecord {
     /// 반응 시간 포맷팅된 문자열
