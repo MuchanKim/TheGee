@@ -59,7 +59,7 @@ struct MainView: View {
                                 .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
                             }
                             
-                            NavigationLink(destination: RankingView()) {
+                            NavigationLink(destination: RankView()) {
                                 HStack {
                                     Image(systemName: "trophy.fill")
                                     Text("RANKING")
@@ -84,30 +84,6 @@ struct MainView: View {
             }
         }
         .navigationBarHidden(true)
-    }
-}
-
-// MARK: - 랭킹 뷰
-struct RankingView: View {
-    @Environment(\.dismiss) private var dismissAction
-    
-    var body: some View {
-        ZStack {
-            Color.black.opacity(0.05).edgesIgnoringSafeArea(.all)
-            
-            VStack(spacing: 30) {
-                Text("랭킹 화면")
-                    .font(.largeTitle)
-                
-                Text("여기서 최고 점수 목록을 확인합니다")
-                    .padding()
-                
-                ActionButtonView.backButton {
-                    dismissAction()
-                }
-            }
-        }
-        .navigationBarBackButtonHidden(true)
     }
 }
 
