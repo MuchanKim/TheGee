@@ -1,5 +1,5 @@
 //
-//  ButtonView.swift
+//  CustomActionButton.swift
 //  TheGee
 //
 //  Created by Moo on 4/14/25.
@@ -12,7 +12,7 @@ import SwiftUI
 /// 다양한 스타일링 옵션을 제공하는 재사용 가능한 버튼 컴포넌트입니다.
 ///
 /// ```swift
-/// ActionButtonView(
+/// CustomActionButton(
 ///     title: "START",
 ///     icon: "play.fill",
 ///     backgroundColor: Color("StartButtonColor"),
@@ -34,7 +34,7 @@ import SwiftUI
 ///   - cornerRadius: 모서리 둥글기 (기본값: 15)
 ///   - shadowRadius: 그림자 크기 (기본값: 5)
 ///   - action: 버튼 탭 시 실행할 클로저
-struct ActionButtonView: View {
+struct CustomActionButton: View {
     let title: String
     let icon: String
     let backgroundColor: Color
@@ -62,9 +62,12 @@ struct ActionButtonView: View {
             .foregroundColor(foregroundColor)
             .cornerRadius(cornerRadius)
             .overlay(
-                borderColor != nil ?
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(borderColor!, lineWidth: borderWidth) : nil
+                Group {
+                    if let borderColor = borderColor {
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(borderColor, lineWidth: borderWidth)
+                    }
+                }
             )
             .shadow(color: .black.opacity(0.2), radius: shadowRadius, x: 0, y: 3)
         }
