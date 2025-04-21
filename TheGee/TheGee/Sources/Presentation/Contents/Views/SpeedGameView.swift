@@ -14,7 +14,7 @@ struct SpeedGameView: View {
     // MARK: 프로퍼티
     @Environment(\.dismiss) private var dismissAction
     @StateObject private var viewModel = SpeedGameViewModel()
-    @StateObject private var rankViewModel = RankViewModel()
+    @StateObject private var personalRecordViewModel = PersonalRecordViewModel()
     
     // MARK: 바디
     var body: some View {
@@ -70,7 +70,7 @@ struct SpeedGameView: View {
                         viewModel.startGame()
                     },
                     onSaveRecord: {
-                        rankViewModel.saveRecord(reactionTime: viewModel.calculateAverageReactionTime())
+                        personalRecordViewModel.saveRecord(reactionTime: viewModel.calculateAverageReactionTime())
                     }
                 )
                 .transition(.opacity)

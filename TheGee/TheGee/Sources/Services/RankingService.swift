@@ -1,61 +1,63 @@
-//
-//  RankingService.swift
-//  TheGee
-//
-//  Created by Moo on 4/25/25.
-//
-
 import Foundation
 
-/// 랭킹 관련 기능을 제공하는 서비스 클래스
+/// 글로벌 랭킹 관련 기능을 제공하는 서비스 클래스
 final class RankingService {
     // MARK: - 프로퍼티
     
-    /// 로컬 개인 기록 저장소
-    private let personalRecordRepository: PersonalRecordRepository
+    /// Firebase 랭킹 저장소
+    private let repository: RankingRepository
     
     // MARK: - 초기화
     
-    init(personalRecordRepository: PersonalRecordRepository = UserDefaultsRepository.shared) {
-        self.personalRecordRepository = personalRecordRepository
+    init(repository: RankingRepository = FirestoreRankingRepository.shared) {
+        self.repository = repository
     }
     
-    // MARK: - 개인 기록 관련 메서드
+    // MARK: - 공유 인스턴스
     
-    /// 저장된 개인 기록 목록을 가져옵니다
-    func getPersonalRecords() -> [PersonalRecord] {
-        return personalRecordRepository.getRecords()
+    static let shared = RankingService()
+    
+    // MARK: - 메서드
+    
+    /// 글로벌 랭킹에 새로운 기록을 저장합니다
+    /// - Parameters:
+    ///   - nickname: 사용자 닉네임
+    ///   - reactionTime: 반응 시간 (밀리초 단위)
+    ///   - completion: 저장 작업 완료 후 호출되는 클로저
+    func saveRanking(nickname: String, reactionTime: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+        repository.saveRanking(nickname: nickname, reactionTime: reactionTime, completion: completion)
     }
     
-    /// 새로운 게임 기록을 저장합니다
-    func savePersonalRecord(reactionTime: Int) {
-        let newRecord = PersonalRecord(
-            reactionTime: reactionTime,
-            date: Date()
-        )
-        
-        personalRecordRepository.saveRecord(newRecord)
+    /// 상위 글로벌 랭킹을 조회합니다
+    /// - Parameters:
+    ///   - limit: 조회할 최대 랭킹 수 (기본값: 5)
+    ///   - completion: 조회 작업 완료 후 호출되는 클로저
+    func getRankings(limit: Int = 5, completion: @escaping (Result<[Rank], Error>) -> Void) {
+        repository.getTopRankings(limit: limit, completion: completion)
     }
     
-    /// 특정 ID의 기록을 삭제합니다
-    func deletePersonalRecord(id: UUID) {
-        personalRecordRepository.deleteRecord(id: id)
+    /// 상위 글로벌 랭킹을 RankingItem 형태로 변환하여 조회합니다
+    /// - Parameters:
+    ///   - limit: 조회할 최대 랭킹 수 (기본값: 5)
+    ///   - completion: 조회 작업 완료 후 호출되는 클로저
+    func getRankingItems(limit: Int = 5, completion: @escaping (Result<[RankingItem], Error>) -> Void) {
+        getRankings(limit: limit) { result in
+            switch result {
+            case .success(let ranks):
+                // 순위를 부여하고 RankingItem으로 변환
+                let rankingItems = ranks.enumerated().map { index, rank in
+                    rank.toRankingItem(rank: index + 1)
+                }
+                completion(.success(rankingItems))
+                
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
-    // MARK: - 랭킹 관련 메서드
-    
-    /// 랭킹 목록을 가져옵니다 (현재는 목업 데이터)
-    func getRankingItems() -> [RankingItem] {
-        // 올바른 메서드 이름으로 수정
+    /// 목업 랭킹 데이터를 가져옵니다
+    func getMockRankingItems() -> [RankingItem] {
         return RankingMockData.mockRankingItems()
-    }
-    
-    // MARK: - 헬퍼 메서드
-    
-    /// 날짜를 포맷팅합니다
-    func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "M월 d일" // 한국어 형식
-        return formatter.string(from: date)
     }
 }

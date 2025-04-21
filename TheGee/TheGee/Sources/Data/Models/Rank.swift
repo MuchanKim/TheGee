@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseCore
 import SwiftUI
 
 // MARK: - 랭킹 아이템 모델
@@ -34,7 +35,49 @@ extension RankingItem {
     
     /// 반응 시간 포맷팅된 문자열
     var formattedReactionTime: String {
-        return "\(reactionTime) ms"
+        return "\(reactionTime)ms"
+    }
+}
+
+// MARK: - Firebase 랭킹 모델
+/// Firestore에 저장되고 불러오는 랭킹 데이터 모델
+struct Rank: Identifiable {
+    let id: String        // Firestore 문서 ID
+    let nickname: String
+    let reactionTime: Int
+    let createdAt: Date?
+    
+    // Firestore 문서에서 변환
+    init?(documentID: String, data: [String: Any]) {
+        guard 
+            let nickname = data["nickname"] as? String,
+            let reactionTime = data["reactionTime"] as? Int
+        else {
+            return nil
+        }
+        
+        self.id = documentID
+        self.nickname = nickname
+        self.reactionTime = reactionTime
+        self.createdAt = (data["createdAt"] as? Timestamp)?.dateValue()
+    }
+}
+
+// MARK: - UI 관련 확장
+extension Rank {
+    /// 반응 시간 포맷팅된 문자열
+    var formattedReactionTime: String {
+        return "\(reactionTime)ms"
+    }
+    
+    /// RankingItem으로 변환 (UI 표시용)
+    func toRankingItem(rank: Int) -> RankingItem {
+        return RankingItem(
+            rank: rank,
+            nickname: nickname,
+            reactionTime: reactionTime,
+            iconNumber: (rank <= 5) ? rank : 5  // 1~5위까지는 순위별 아이콘, 나머지는 5번 아이콘
+        )
     }
 }
 
