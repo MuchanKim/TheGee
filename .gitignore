@@ -78,6 +78,7 @@ fastlane/test_output
 #------------------
 iOSInjectionProject/    # 코드 인젝션 도구
 .DS_Store               # macOS 시스템 파일
+**/.DS_Store		# macOS 시스템 파일
 *.xcuserstate          # Xcode 상태 파일
 **/Preview Content     # SwiftUI 프리뷰 콘텐츠
 
