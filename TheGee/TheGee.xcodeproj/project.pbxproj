@@ -6,10 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		F5EAD14F2DB54AC700BC530A /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = F5EAD14E2DB54AC700BC530A /* FirebaseFirestore */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		F5C5175E2DACD78000E682F7 /* TheGee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheGee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -40,7 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5EAD14F2DB54AC700BC530A /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,7 +78,6 @@
 			);
 			name = TheGee;
 			packageProductDependencies = (
-				F5EAD14E2DB54AC700BC530A /* FirebaseFirestore */,
 			);
 			productName = TheGee;
 			productReference = F5C5175E2DACD78000E682F7 /* TheGee.app */;
@@ -113,9 +107,6 @@
 			);
 			mainGroup = F5C517552DACD78000E682F7;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				F5EAD14D2DB54AC700BC530A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F5C5175F2DACD78000E682F7 /* Products */;
 			projectDirPath = "";
@@ -348,25 +339,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		F5EAD14D2DB54AC700BC530A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 11.11.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		F5EAD14E2DB54AC700BC530A /* FirebaseFirestore */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = F5EAD14D2DB54AC700BC530A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestore;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5C517562DACD78000E682F7 /* Project object */;
 }
