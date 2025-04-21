@@ -11,7 +11,8 @@ import SwiftUI
 /// 사용자 랭킹 및 개인 기록을 표시하는 화면
 struct RankView: View {
     @Environment(\.dismiss) private var dismissAction
-    @StateObject private var viewModel = RankViewModel()
+    @StateObject private var rankViewModel = RankViewModel()
+    @StateObject private var personalRecordViewModel = PersonalRecordViewModel()
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -42,7 +43,7 @@ struct RankView: View {
                     .padding(.bottom, 6)
                     
                     // 랭킹 리스트
-                    RankListView(items: viewModel.rankingItems)
+                    RankListView(items: rankViewModel.rankingItems)
                     
                     Spacer()
                     
@@ -58,13 +59,13 @@ struct RankView: View {
                     .padding(.horizontal, 26)
                     .padding(.bottom, 6)
                     
-                    // 개인 기록 리스트
+                    // 개인 기록 리스트 - PersonalRecordViewModel 사용
                     RecordsView(
-                        records: viewModel.sortedByRecentDate,
+                        records: personalRecordViewModel.sortedByRecentDate,
                         onDelete: { id in
-                            viewModel.deleteRecord(withId: id)
+                            personalRecordViewModel.deleteRecord(id: id)
                         },
-                        formatDate: viewModel.formatDate
+                        formatDate: personalRecordViewModel.formatDate
                     )
                     
                     // 하단 여백
@@ -75,7 +76,7 @@ struct RankView: View {
             .overlay(
                 // 로딩 오버레이
                 Group {
-                    if viewModel.isLoading {
+                    if rankViewModel.isLoading || personalRecordViewModel.isLoading {
                         ZStack {
                             Color.black.opacity(0.3)
                                 .edgesIgnoringSafeArea(.all)
@@ -106,7 +107,7 @@ struct RankView: View {
             .zIndex(10) // 최상위 레이어로 설정하여 항상 터치 가능하게 함
             
             // 오류 메시지 
-            if let errorMessage = viewModel.errorMessage {
+            if let errorMessage = rankViewModel.errorMessage {
                 VStack {
                     Spacer()
                     

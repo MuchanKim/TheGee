@@ -11,6 +11,8 @@ import SwiftUI
 struct ResultCardView: View {
     @Binding var nickname: String
     let averageTime: Int
+    var isSaving: Bool = false
+    var errorMessage: String? = nil
     let onRegistration: () -> Void
     let onSkip: () -> Void
     
@@ -67,17 +69,46 @@ struct ResultCardView: View {
                 
                 // 등록하기 버튼
                 Button(action: onRegistration) {
-                    Text("등록하기")
+                    if isSaving {
+                        // 로딩 중 상태 표시
+                        HStack {
+                            Text("등록 중...")
+                            ProgressView()
+                                .scaleEffect(0.7)
+                        }
                         .font(.system(size: 18, weight: .bold))
                         .foregroundColor(.white)
                         .frame(width: cardWidth - 40, height: 55)
-                        .background(Color("StartButtonColor"))
+                        .background(Color("StartButtonColor").opacity(0.7))
                         .cornerRadius(10)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color("StartButtonStroke"), lineWidth: 3)
                         )
                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+                    } else {
+                        // 일반 상태 버튼
+                        Text("등록하기")
+                            .font(.system(size: 18, weight: .bold))
+                            .foregroundColor(.white)
+                            .frame(width: cardWidth - 40, height: 55)
+                            .background(Color("StartButtonColor"))
+                            .cornerRadius(10)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color("StartButtonStroke"), lineWidth: 3)
+                            )
+                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 3)
+                    }
+                }
+                .disabled(isSaving) // 저장 중에는 버튼 비활성화
+                
+                // 오류 메시지 표시
+                if let error = errorMessage {
+                    Text(error)
+                        .font(.system(size: 14))
+                        .foregroundColor(.red)
+                        .padding(.top, 4)
                 }
                 
                 // 다음에 등록 텍스트
@@ -87,6 +118,7 @@ struct ResultCardView: View {
                         .foregroundColor(.gray)
                         .frame(height: 40)
                 }
+                .disabled(isSaving) // 저장 중에는 버튼 비활성화
             }
             .frame(width: cardWidth - 20)
         }

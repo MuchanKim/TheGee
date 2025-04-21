@@ -13,11 +13,12 @@ struct ResultView: View {
     let averageTime: Int
     let onClose: () -> Void
     let onRestart: () -> Void
-    let onSaveRecord: (() -> Void)? // 저장 콜백 (개인 기록 저장용)
+    let onSaveRecord: (() -> Void)? // 개인 기록 저장용
     
-    // 닉네임 입력을 위한 상태 변수
-    @State private var nickname: String = ""
-    // 기록 저장 여부를 추적하는 변수 추가
+    // ResultViewModel 사용
+    @StateObject private var viewModel = ResultViewModel()
+    
+    // 개인 기록 저장 여부 추적
     @State private var isPersonalRecordSaved: Bool = false
     
     var body: some View {
@@ -37,12 +38,12 @@ struct ResultView: View {
                 
                 // 결과 카드
                 ResultCardView(
-                    nickname: $nickname,
+                    nickname: $viewModel.nickname,
                     averageTime: averageTime,
+                    isSaving: viewModel.isSaving,
+                    errorMessage: viewModel.errorMessage,
                     onRegistration: {
-                        // 여기는 나중에 파이어베이스 랭킹 등록 기능 추가 예정
-                        // 등록하기 버튼을 누르면 메인 화면으로 돌아감
-                        onClose()
+                        viewModel.saveRanking(reactionTime: averageTime)
                     },
                     onSkip: onClose
                 )/*.padding(.bottom, 120)*/
@@ -53,6 +54,12 @@ struct ResultView: View {
             if !isPersonalRecordSaved {
                 onSaveRecord?()
                 isPersonalRecordSaved = true
+            }
+        }
+        .onChange(of: viewModel.isComplete) {
+            _, isComplete in
+            if isComplete {
+                onClose() // 저장 완료시 화면 닫기
             }
         }
     }
