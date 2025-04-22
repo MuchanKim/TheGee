@@ -126,7 +126,7 @@ struct GameMessageView: View {
             
             // 텍스트
             Text(message)
-                .font(.system(size: fontSize, weight: fontWeight))
+                .font(.gameMessage(size: fontSize))
                 .foregroundColor(textColor)
                 .lineLimit(1)
         }

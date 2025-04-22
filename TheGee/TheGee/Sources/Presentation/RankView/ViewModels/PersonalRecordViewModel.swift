@@ -18,7 +18,6 @@ final class PersonalRecordViewModel: ObservableObject {
     
     // MARK: - 초기화
     
-    /// 뷰모델 초기화 및 데이터 로드
     /// - Parameter personalRecordService: 개인 기록 서비스 (기본값: 공유 인스턴스)
     init(personalRecordService: PersonalRecordService = PersonalRecordService.shared) {
         self.personalRecordService = personalRecordService

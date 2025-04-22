@@ -33,7 +33,7 @@ struct RankView: View {
                     // 랭킹 타이틀
                     HStack {
                         Text("Ranking")
-                            .font(.custom("DNFBitBitOTF", size: 32))
+                            .font(.gameTitle(size: 32))
                             .foregroundColor(.white)
                             .shadow(color: .black.opacity(0.5), radius: 2)
                         
@@ -50,7 +50,7 @@ struct RankView: View {
                     // 개인 기록 타이틀
                     HStack {
                         Text("My Records")
-                            .font(.custom("DNFBitBitOTF", size: 32))
+                            .font(.gameTitle(size: 32))
                             .foregroundColor(.white)
                             .shadow(color: .black.opacity(0.5), radius: 2)
                         

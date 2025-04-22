@@ -47,7 +47,7 @@ struct CustomActionButton: View {
     var cornerRadius: CGFloat = 15
     var shadowRadius: CGFloat = 5
     
-    let action: () -> Void
+    var action: () -> Void = {}
     
     var body: some View {
         Button(action: action) {

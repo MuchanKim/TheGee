@@ -31,11 +31,6 @@ struct ResultView: View {
             
             VStack(spacing: 5) {
                 
-                // 디그다 이미지
-//                Image("SmallDigda")
-//                    .resizable()
-//                    .frame(width: 100, height: 130)
-                
                 // 결과 카드
                 ResultCardView(
                     nickname: $viewModel.nickname,
@@ -46,7 +41,7 @@ struct ResultView: View {
                         viewModel.saveRanking(reactionTime: averageTime)
                     },
                     onSkip: onClose
-                )/*.padding(.bottom, 120)*/
+                )
             }
         }
         .onAppear {
