@@ -22,28 +22,20 @@ struct ResultView: View {
     @State private var isPersonalRecordSaved: Bool = false
     
     var body: some View {
-        ZStack {
-            // 동굴 배경 이미지
-            Image("Cave")
-                .resizable()
-                .scaledToFill()
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack(spacing: 5) {
-                
-                // 결과 카드
-                ResultCardView(
-                    nickname: $viewModel.nickname,
-                    averageTime: averageTime,
-                    isSaving: viewModel.isSaving,
-                    errorMessage: viewModel.errorMessage,
-                    onRegistration: {
-                        viewModel.saveRanking(reactionTime: averageTime)
-                    },
-                    onSkip: onClose
-                )
-            }
+        VStack(spacing: 5) {
+            // 결과 카드
+            ResultCardView(
+                nickname: $viewModel.nickname,
+                averageTime: averageTime,
+                isSaving: viewModel.isSaving,
+                errorMessage: viewModel.errorMessage,
+                onRegistration: {
+                    viewModel.saveRanking(reactionTime: averageTime)
+                },
+                onSkip: onClose
+            )
         }
+        .caveBackground()
         .onAppear {
             // 화면이 나타날 때 자동으로 개인 기록만 저장
             if !isPersonalRecordSaved {
@@ -52,13 +44,11 @@ struct ResultView: View {
             }
         }
         .onChange(of: viewModel.isComplete) {
-            _, isComplete in
-            if isComplete {
                 onClose() // 저장 완료시 화면 닫기
             }
         }
     }
-}
+
 
 #Preview {
     ResultView(

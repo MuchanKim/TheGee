@@ -18,66 +18,64 @@ struct SpeedGameView: View {
     
     // MARK: 바디
     var body: some View {
-        ZStack {
-            // 동굴 배경
-            Image("Cave")
-                .resizable()
-                .scaledToFill()
-                .edgesIgnoringSafeArea(.all)
-                .opacity(0.95)
-            
+        VStack {
             // 상단 뒤로가기 버튼
-            VStack {
-                HStack {
-                    BackButtonView(action: {
-                        dismissAction()
-                    })
-                    .padding([.leading, .top], 16)
-                    
-                    Spacer()
-                }
-                .padding(.top, 25)  // 버튼 전체 영역을 아래로 내림
+            HStack {
+                BackButtonView(action: {
+                    dismissAction()
+                })
+                .padding([.leading, .top], 16)
                 
                 Spacer()
             }
+            .padding(.top, 25)  // 버튼 전체 영역을 아래로 내림
             
+            Spacer()
+        }
+        .overlay(
             // 캐릭터와 메시지를 함께 배치 (캐릭터 바로 위에 메시지)
-            if viewModel.currentCharacter != .none {
-                VStack(spacing: 15) {
-                    if !viewModel.reactionMessage.isEmpty {
-                        GameMessageView(
-                            message: viewModel.reactionMessage,
-                            character: viewModel.currentCharacter,
-                            showsReactionTime: viewModel.reactionMessage.contains("ms")
-                        )
+            Group {
+                if viewModel.currentCharacter != .none {
+                    VStack(spacing: 15) {
+                        if !viewModel.reactionMessage.isEmpty {
+                            GameMessageView(
+                                message: viewModel.reactionMessage,
+                                character: viewModel.currentCharacter,
+                                showsReactionTime: viewModel.reactionMessage.contains("ms")
+                            )
+                        }
+                        
+                        CharacterImageView(character: viewModel.currentCharacter, state: viewModel.characterState)
+                            .frame(width: 200, height: 200)
+                            .contentShape(Rectangle())
                     }
-                    
-                    CharacterImageView(character: viewModel.currentCharacter, state: viewModel.characterState)
-                        .frame(width: 200, height: 200)
-                        .contentShape(Rectangle())
                 }
             }
-            
+        )
+        .overlay(
             // 결과 화면 오버레이
-            if viewModel.showResults {
-                ResultView(
-                    reactionTimes: viewModel.reactionTimes,
-                    averageTime: viewModel.calculateAverageReactionTime(),
-                    onClose: {
-                        dismissAction()
-                    },
-                    onRestart: {
-                        viewModel.startGame()
-                    },
-                    onSaveRecord: {
-                        personalRecordViewModel.saveRecord(reactionTime: viewModel.calculateAverageReactionTime())
-                    }
-                )
-                .transition(.opacity)
-                .animation(.easeInOut, value: viewModel.showResults)
-                .zIndex(1) // 결과 화면을 최상위 레이어로 설정
+            Group {
+                if viewModel.showResults {
+                    ResultView(
+                        reactionTimes: viewModel.reactionTimes,
+                        averageTime: viewModel.calculateAverageReactionTime(),
+                        onClose: {
+                            dismissAction()
+                        },
+                        onRestart: {
+                            viewModel.startGame()
+                        },
+                        onSaveRecord: {
+                            personalRecordViewModel.saveRecord(reactionTime: viewModel.calculateAverageReactionTime())
+                        }
+                    )
+                    .transition(.opacity)
+                    .animation(.easeInOut, value: viewModel.showResults)
+                    .zIndex(1) // 결과 화면을 최상위 레이어로 설정
+                }
             }
-        }
+        )
+        .caveBackground()
         .onTapGesture {
             viewModel.didTapScreen()
         }
