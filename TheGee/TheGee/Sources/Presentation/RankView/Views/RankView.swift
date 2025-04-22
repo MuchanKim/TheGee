@@ -11,17 +11,14 @@ import SwiftUI
 /// 사용자 랭킹 및 개인 기록을 표시하는 화면
 struct RankView: View {
     @Environment(\.dismiss) private var dismissAction
-    @StateObject private var rankViewModel = RankViewModel()
-    @StateObject private var personalRecordViewModel = PersonalRecordViewModel()
+    @StateObject private var viewModel = RankViewModel()
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 15) {
-                // 상단 여백 - 뒤로가기 버튼을 위한 공간
                 Spacer()
                     .frame(height: 86)
                 
-                // 랭킹 타이틀
                 HStack {
                     Text("Ranking")
                         .font(.gameTitle(size: 32))
@@ -33,12 +30,10 @@ struct RankView: View {
                 .padding(.horizontal, 26)
                 .padding(.bottom, 6)
                 
-                // 랭킹 리스트
-                RankListView(items: rankViewModel.rankingItems)
+                RankListView(items: viewModel.rankingItems)
                 
                 Spacer()
                 
-                // 개인 기록 타이틀
                 HStack {
                     Text("My Records")
                         .font(.gameTitle(size: 32))
@@ -50,13 +45,13 @@ struct RankView: View {
                 .padding(.horizontal, 26)
                 .padding(.bottom, 6)
                 
-                // 개인 기록 리스트 - PersonalRecordViewModel 사용
+                // 개인 기록 리스트
                 RecordsView(
-                    records: personalRecordViewModel.sortedByRecentDate,
+                    records: viewModel.sortedByRecentDate,
                     onDelete: { id in
-                        personalRecordViewModel.deleteRecord(id: id)
+                        viewModel.deleteRecord(id: id)
                     },
-                    formatDate: personalRecordViewModel.formatDate
+                    formatDate: viewModel.formatDate
                 )
                 
                 // 하단 여백
@@ -67,7 +62,7 @@ struct RankView: View {
         .overlay(
             // 로딩 오버레이
             Group {
-                if rankViewModel.isLoading || personalRecordViewModel.isLoading {
+                if viewModel.isLoading {
                     ZStack {
                         Color.black.opacity(0.3)
                             .edgesIgnoringSafeArea(.all)
@@ -101,7 +96,7 @@ struct RankView: View {
         .overlay(
             // 오류 메시지 
             Group {
-                if let errorMessage = rankViewModel.errorMessage {
+                if let errorMessage = viewModel.errorMessage {
                     VStack {
                         Spacer()
                         
