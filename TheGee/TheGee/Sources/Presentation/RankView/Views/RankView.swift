@@ -19,31 +19,19 @@ struct RankView: View {
                 Spacer()
                     .frame(height: 86)
                 
-                HStack {
-                    Text("Ranking")
-                        .font(.gameTitle(size: 32))
-                        .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.5), radius: 2)
-                    
-                    Spacer()
-                }
-                .padding(.horizontal, 26)
-                .padding(.bottom, 6)
+                // 랭킹 타이틀
+                TitleHeaderView(title: "Ranking")
+                    .padding(.horizontal, 26)
+                    .padding(.bottom, 6)
                 
                 RankListView(items: viewModel.rankingItems)
                 
                 Spacer()
                 
-                HStack {
-                    Text("My Records")
-                        .font(.gameTitle(size: 32))
-                        .foregroundColor(.white)
-                        .shadow(color: .black.opacity(0.5), radius: 2)
-                    
-                    Spacer()
-                }
-                .padding(.horizontal, 26)
-                .padding(.bottom, 6)
+                // 개인 기록 타이틀
+                TitleHeaderView(title: "My Records")
+                    .padding(.horizontal, 26)
+                    .padding(.bottom, 6)
                 
                 // 개인 기록 리스트
                 RecordsView(
@@ -115,6 +103,24 @@ struct RankView: View {
         )
         .caveBackground()
         .navigationBarBackButtonHidden(true)
+    }
+}
+
+// MARK: - 타이틀 헤더 뷰
+/// 섹션 타이틀을 표시하는 재사용 가능한 컴포넌트
+struct TitleHeaderView: View {
+    let title: String
+    var fontSize: CGFloat = 32
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .font(.gameTitle(size: fontSize))
+                .foregroundColor(.white)
+                .shadow(color: .black.opacity(0.5), radius: 2)
+            
+            Spacer()
+        }
     }
 }
 
