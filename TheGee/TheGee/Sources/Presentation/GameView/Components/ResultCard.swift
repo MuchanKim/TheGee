@@ -39,13 +39,13 @@ struct ResultCardView: View {
                     Spacer()
                     
                     Text("내 기록")
-                        .font(.system(size: 26, weight: .bold))
+                        .font(.cardTitle(size: 26))
                         .foregroundColor(.black)
                     
                     Spacer()
                     
                     Text("\(averageTime) ms")
-                        .font(.system(size: 26, weight: .bold))
+                        .font(.cardTitle(size: 26))
                         .foregroundColor(.red)
                     
                     Spacer()
@@ -54,13 +54,13 @@ struct ResultCardView: View {
                 
                 // 닉네임 입력 안내
                 Text("닉네임 입력하면 순위 등록해줄게")
-                    .font(.system(size: 16))
+                    .font(.cardBody(size: 16))
                     .foregroundColor(.black.opacity(0.8))
                     .frame(height: 30)
                 
                 // 닉네임 입력 필드
                 TextField("한글 8글자 이내, 영어 12글자 이내", text: $nickname)
-                    .font(.system(size: 16))
+                    .font(.cardBody(size: 16))
                     .foregroundColor(.black.opacity(0.7))
                     .padding(.horizontal, 16)
                     .frame(width: cardWidth - 40, height: 50)
@@ -76,7 +76,7 @@ struct ResultCardView: View {
                             ProgressView()
                                 .scaleEffect(0.7)
                         }
-                        .font(.system(size: 18, weight: .bold))
+                        .font(.buttonText(size: 18))
                         .foregroundColor(.white)
                         .frame(width: cardWidth - 40, height: 55)
                         .background(Color("StartButtonColor").opacity(0.7))
@@ -89,7 +89,7 @@ struct ResultCardView: View {
                     } else {
                         // 일반 상태 버튼
                         Text("등록하기")
-                            .font(.system(size: 18, weight: .bold))
+                            .font(.buttonText(size: 18))
                             .foregroundColor(.white)
                             .frame(width: cardWidth - 40, height: 55)
                             .background(Color("StartButtonColor"))
@@ -106,7 +106,7 @@ struct ResultCardView: View {
                 // 오류 메시지 표시
                 if let error = errorMessage {
                     Text(error)
-                        .font(.system(size: 14))
+                        .font(.cardBody(size: 14))
                         .foregroundColor(.red)
                         .padding(.top, 4)
                 }
@@ -114,7 +114,7 @@ struct ResultCardView: View {
                 // 다음에 등록 텍스트
                 Button(action: onSkip) {
                     Text("다음에 등록할래요")
-                        .font(.system(size: 16)).bold()
+                        .font(.buttonText(size: 16))
                         .foregroundColor(.gray)
                         .frame(height: 40)
                 }

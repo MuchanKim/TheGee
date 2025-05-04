@@ -27,8 +27,8 @@ final class ResultViewModel: ObservableObject {
     // MARK: - 초기화
     
     /// 뷰모델 초기화
-    /// - Parameter rankingService: 랭킹 서비스 (기본값: 공유 인스턴스)
-    init(rankingService: RankingService = RankingService.shared) {
+    /// - Parameter rankingService: 랭킹 서비스
+    init(rankingService: RankingService = RankingService()) {
         self.rankingService = rankingService
     }
     

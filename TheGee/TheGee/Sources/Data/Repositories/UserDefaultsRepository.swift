@@ -2,16 +2,29 @@ import Foundation
 
 /// UserDefaults를 이용한 저장소 구현체
 class UserDefaultsRepository: PersonalRecordRepository {
-    // 싱글톤 인스턴스
-    static let shared = UserDefaultsRepository()
+    private let recordsKey: String
+    private let maxRecords: Int
+    private let userDefaults: UserDefaults
     
-    private let recordsKey = "personalRecords"
-    private let maxRecords = 3
+    // MARK: - 초기화
     
-    private init() {}
+    /// 기본 초기화 메서드
+    /// - Parameters:
+    ///   - recordsKey: UserDefaults에 저장될 키 (기본값: "personalRecords")
+    ///   - maxRecords: 최대 저장 기록 수 (기본값: 3)
+    ///   - userDefaults: 사용할 UserDefaults 인스턴스 (기본값: standard)
+    init(
+        recordsKey: String = "personalRecords",
+        maxRecords: Int = 3,
+        userDefaults: UserDefaults = .standard
+    ) {
+        self.recordsKey = recordsKey
+        self.maxRecords = maxRecords
+        self.userDefaults = userDefaults
+    }
     
     func getRecords() -> [PersonalRecord] {
-        guard let data = UserDefaults.standard.data(forKey: recordsKey),
+        guard let data = userDefaults.data(forKey: recordsKey),
               let records = try? JSONDecoder().decode([PersonalRecord].self, from: data) else {
             return []
         }
@@ -31,7 +44,7 @@ class UserDefaultsRepository: PersonalRecordRepository {
         }
         
         if let data = try? JSONEncoder().encode(records) {
-            UserDefaults.standard.set(data, forKey: recordsKey)
+            userDefaults.set(data, forKey: recordsKey)
         }
     }
     
@@ -40,7 +53,7 @@ class UserDefaultsRepository: PersonalRecordRepository {
         records.removeAll { $0.id == id }
         
         if let data = try? JSONEncoder().encode(records) {
-            UserDefaults.standard.set(data, forKey: recordsKey)
+            userDefaults.set(data, forKey: recordsKey)
         }
     }
 }

@@ -51,15 +51,15 @@ struct RecordItemView: View {
         HStack {
             // 기록
             Text(record.formattedReactionTime)
-                .font(.system(size: 18, weight: .semibold))
+                .font(.cardTitle(size: 18))
                 .foregroundColor(.black)
                 .padding(.leading, 20)
             
             Spacer()
             
             // 날짜
-            Text(formatDate(record.date))  // 주입된 함수 사용
-                .font(.system(size: 16))
+            Text(formatDate(record.date))
+                .font(.cardBody(size: 16))
                 .foregroundColor(.black.opacity(0.7))
                 .padding(.trailing, 10)
             

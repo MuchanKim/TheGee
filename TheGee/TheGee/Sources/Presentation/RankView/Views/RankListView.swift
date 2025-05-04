@@ -47,14 +47,14 @@ struct RankItemView: View {
                     .frame(width: 30, height: 30)
                 
                 Text("\(item.rank)")
-                    .font(.system(size: 15, weight: .bold))
+                    .font(.buttonText(size: 15))
                     .foregroundColor(.white)
             }
             .padding(.leading, 12)
             
             // 닉네임
             Text(item.nickname)
-                .font(.system(size: 18, weight: .semibold))
+                .font(.cardTitle(size: 18))
                 .foregroundColor(.black)
                 .padding(.leading, 12)
             
@@ -62,7 +62,7 @@ struct RankItemView: View {
             
             // 기록
             Text(item.formattedReactionTime)
-                .font(.system(size: 18, weight: .semibold))
+                .font(.cardTitle(size: 18))
                 .foregroundColor(.black)
                 .padding(.trailing, 12)
         }

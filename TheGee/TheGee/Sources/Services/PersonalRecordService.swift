@@ -10,15 +10,10 @@ final class PersonalRecordService {
     // MARK: - 초기화
     
     /// PersonalRecordService 인스턴스를 초기화합니다.
-    /// - Parameter repository: 개인 기록 저장소 (기본값: UserDefaultsRepository.shared)
-    init(repository: PersonalRecordRepository = UserDefaultsRepository.shared) {
+    /// - Parameter repository: 개인 기록 저장소
+    init(repository: PersonalRecordRepository = UserDefaultsRepository()) {
         self.repository = repository
     }
-    
-    // MARK: - 공유 인스턴스
-    
-    /// PersonalRecordService의 공유 인스턴스
-    static let shared = PersonalRecordService()
     
     // MARK: - 메서드
     
