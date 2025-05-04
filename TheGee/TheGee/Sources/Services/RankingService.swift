@@ -9,13 +9,9 @@ final class RankingService {
     
     // MARK: - 초기화
     
-    init(repository: RankingRepository = FirestoreRankingRepository.shared) {
+    init(repository: RankingRepository = FirestoreRankingRepository()) {
         self.repository = repository
     }
-    
-    // MARK: - 공유 인스턴스
-    
-    static let shared = RankingService()
     
     // MARK: - 메서드
     

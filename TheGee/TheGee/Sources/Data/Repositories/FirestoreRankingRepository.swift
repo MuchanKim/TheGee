@@ -13,13 +13,22 @@ import FirebaseFirestore
 final class FirestoreRankingRepository: RankingRepository {
     // MARK: - 프로퍼티
     
-    private let db = Firestore.firestore()
-    private let collectionName = "rankings"
+    private let db: Firestore
+    private let collectionName: String
     
-    /// 공유 인스턴스
-    static let shared = FirestoreRankingRepository()
+    // MARK: - 초기화
     
-    private init() {}
+    /// 기본 초기화 메서드
+    /// - Parameters:
+    ///   - db: Firestore 인스턴스 (기본값: Firestore.firestore())
+    ///   - collectionName: 컬렉션 이름 (기본값: "rankings")
+    init(
+        db: Firestore = Firestore.firestore(),
+        collectionName: String = "rankings"
+    ) {
+        self.db = db
+        self.collectionName = collectionName
+    }
     
     // MARK: - RankingRepository 구현
     
