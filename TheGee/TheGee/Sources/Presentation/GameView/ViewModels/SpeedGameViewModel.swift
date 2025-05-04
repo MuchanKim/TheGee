@@ -34,12 +34,16 @@ class SpeedGameViewModel: ObservableObject {
     private var digdaCycle: Int = 0
     private let totalCycles: Int = 3
     
+    // 개인 기록 서비스 의존성 추가
+    private let personalRecordService: PersonalRecordService
+    
     // MARK: - 초기화
     /**
      뷰모델 초기화 및 디그다 등장 사이클 랜덤 설정
      - 디그다가 등장할 사이클 번호를 1~3 사이에서 랜덤하게 설정
      */
-    init() {
+    init(personalRecordService: PersonalRecordService = PersonalRecordService()) {
+        self.personalRecordService = personalRecordService
         digdaCycle = Int.random(in: 0..<totalCycles)
     }
     
@@ -71,8 +75,7 @@ class SpeedGameViewModel: ObservableObject {
     private func scheduleNextCharacter() {
         // 모든 사이클 완료 시 게임 종료
         if currentCycle >= totalCycles {
-            gameState = .finished
-            showResults = true  // 결과 화면 표시
+            completeGame()
             return
         }
         
@@ -84,6 +87,23 @@ class SpeedGameViewModel: ObservableObject {
         timer = Timer.scheduledTimer(withTimeInterval: delay, repeats: false) { [weak self] _ in
             self?.showCharacter()
         }
+    }
+    
+    /**
+     게임 완료 시 호출되는 메서드입니다.
+     - 게임 상태를 완료로 변경
+     - 개인 기록 자동 저장
+     - 결과 화면 표시
+     */
+    private func completeGame() {
+        gameState = .finished
+        
+        // 개인 기록 자동 저장
+        let averageTime = calculateAverageReactionTime()
+        personalRecordService.saveRecord(reactionTime: averageTime)
+        
+        // 결과 화면 표시
+        showResults = true
     }
     
     /**

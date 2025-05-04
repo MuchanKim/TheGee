@@ -2,6 +2,8 @@
 //  RankViewModel.swift
 //  TheGee
 //
+//  현재 Global Rank와 Personal Record 독립적인 두 기능을 RankViewModel에 포함함.
+//
 //  Created by Moo on 4/19/25.
 //
 
@@ -36,11 +38,11 @@ final class RankViewModel: ObservableObject {
     
     /// 뷰모델 초기화 및 데이터 로드
     /// - Parameters:
-    ///   - rankingService: 랭킹 서비스 (기본값: 공유 인스턴스)
-    ///   - personalRecordService: 개인 기록 서비스 (기본값: 공유 인스턴스)
+    ///   - rankingService: 랭킹 서비스
+    ///   - personalRecordService: 개인 기록 서비스
     init(
-        rankingService: RankingService = RankingService.shared,
-        personalRecordService: PersonalRecordService = PersonalRecordService.shared
+        rankingService: RankingService = RankingService(),
+        personalRecordService: PersonalRecordService = PersonalRecordService()
     ) {
         self.rankingService = rankingService
         self.personalRecordService = personalRecordService

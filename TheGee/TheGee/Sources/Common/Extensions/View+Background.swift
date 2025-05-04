@@ -8,7 +8,7 @@
 import SwiftUI
 
 extension View {
-    func caveBackground(opacity: CGFloat = 0.85) -> some View {
+    func caveBackground(opacity: CGFloat = 0.95) -> some View {
         self.modifier(CaveBackgroundModifier(opacity: opacity))
     }
 }

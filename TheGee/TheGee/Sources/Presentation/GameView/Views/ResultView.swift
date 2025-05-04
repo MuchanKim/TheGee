@@ -38,16 +38,17 @@ struct ResultView: View {
         .caveBackground()
         .onAppear {
             // 화면이 나타날 때 자동으로 개인 기록만 저장
-            if !isPersonalRecordSaved {
+            if !isPersonalRecordSaved && onSaveRecord != nil {
                 onSaveRecord?()
                 isPersonalRecordSaved = true
             }
         }
         .onChange(of: viewModel.isComplete) {
-                onClose() // 저장 완료시 화면 닫기
-            }
+            onClose()
+            
         }
     }
+}
 
 
 #Preview {
